@@ -4,12 +4,17 @@ package fr.soyhuce.transformer;
  * Created by SoyHuCe on 31/10/2017.
  */
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,6 +147,25 @@ public abstract class Transformer<T> {
             Log.e(TAG, e.getMessage(), e);
         } catch (IllegalAccessException e){
             Log.e(TAG, e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /***
+     * Permet d'obtenir une valeur de type URL dans un JSON à partir d'une clé
+     * @param jsonObject JSONObject contenant la valeur à récupérer
+     * @param key Clé correspondant à la valeur à récupérer
+     * @return La valeur correspondant à la clé ou null si celle-ci n'existe pas dans le JSON ou qu'il ne s'agisse pas d'une URL valide
+     * @throws JSONException JSONException lancée lorsque l'objet JSONObject ne correspont pas et qu'une erreur se produit au moment de le parser
+     */
+    protected @Nullable URL getOptionalURL(@NonNull JSONObject jsonObject, @NonNull String key) throws JSONException {
+        if(jsonObject.has(key) && !jsonObject.isNull(key)){
+            try{
+                return URI.create(jsonObject.getString(key)).toURL();
+            }catch(MalformedURLException e){
+                Log.e(TAG, e.getMessage(), e);
+                return null;
+            }
         }
         return null;
     }
