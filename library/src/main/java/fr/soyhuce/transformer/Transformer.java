@@ -145,6 +145,7 @@ public abstract class Transformer<T> {
             }
         } catch (InstantiationException e) {
             Log.e(TAG, e.getMessage(), e);
+            return null;
         } catch (IllegalAccessException e){
             Log.e(TAG, e.getMessage(), e);
         }
@@ -159,10 +160,10 @@ public abstract class Transformer<T> {
      * @throws JSONException JSONException lancée lorsque l'objet JSONObject ne correspont pas et qu'une erreur se produit au moment de le parser
      */
     protected @Nullable URL getOptionalURL(@NonNull JSONObject jsonObject, @NonNull String key) throws JSONException {
-        if(jsonObject.has(key) && !jsonObject.isNull(key)){
+        if(jsonObject.has(key) && !jsonObject.isNull(key) && !jsonObject.getString(key).equals("")){
             try{
                 return URI.create(jsonObject.getString(key)).toURL();
-            }catch(MalformedURLException e){
+            }catch(MalformedURLException | IllegalArgumentException e){
                 Log.e(TAG, e.getMessage(), e);
                 return null;
             }
