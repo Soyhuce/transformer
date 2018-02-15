@@ -1,0 +1,6 @@
+-classpath '/Users/mathieuedet/Library/Android/sdk/platforms/android-26/android.jar'
+-d '/Users/mathieuedet/Projects/Android Libraries/transformer/library/build/docs/javadoc'
+-doctitle 'library API'
+-quiet 
+-windowtitle 'library API'
+'/Users/mathieuedet/Projects/Android Libraries/transformer/library/src/main/java/fr/soyhuce/transformer/Transformer.java'
